@@ -8,22 +8,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: start deployment
-      uses: bobheadxi/deployments@v0.4.3
+    - uses: chrnorm/deployment-action@releases/v1
+      name: Create GitHub deployment
       id: deployment
       with:
-        step: start
-        token: ${{ secrets.GITHUB_TOKEN }}
-        env: release
+        token: "${{ github.token }}"
+        target_url: http://my-app-url.com
+        environment: production
 
     - name: deployment
       run: echo "Deploy... (dummy)"
 
-    - name: update deployment status
-      uses: bobheadxi/deployments@v0.4.3
-      if: always()
+    - name: Update deployment status (success)
+      if: success()
+      uses: chrnorm/deployment-status@releases/v1
       with:
-        step: finish
-        token: ${{ secrets.GITHUB_TOKEN }}
-        status: ${{ job.status }}
+        token: "${{ github.token }}"
+        target_url: http://my-app-url.com
+        state: "success"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Update deployment status (failure)
+      if: failure()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target_url: http://my-app-url.com
+        state: "failure"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
