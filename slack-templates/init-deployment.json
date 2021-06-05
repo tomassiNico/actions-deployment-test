@@ -1,0 +1,30 @@
+{
+    "blocks": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*Nuevo deployment iniciado*\n <!channel> atentis\nEsperamos que salga todo bien"
+        },
+        "accessory": {
+          "type": "image",
+          "image_url": "https://tenor.com/view/lenny-simpsons-waiting-silent-still-gif-3838613",
+          "alt_text": "lenny waiting"
+        }
+      },
+      {
+        "type": "input",
+        "element": {
+          "type": "plain_text_input",
+          "multiline": true,
+          "action_id": "plain_text_input-action"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Stories del deployment:",
+          "emoji": true
+        }
+      }
+    ]
+  }
+  
