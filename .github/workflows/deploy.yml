@@ -36,3 +36,10 @@ jobs:
         target_url: http://my-app-url.com
         state: "failure"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Notify slack for init deployment
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: pullreminders/slack-action@master
+      with:
+        args: '{\"channel\":\"C024046NVRB\",\"text\":\"Hello world\"}'
