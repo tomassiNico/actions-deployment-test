@@ -42,7 +42,7 @@ jobs:
       env:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
       with:
-        attachments: |
+        blocks: |
           [
             {
               "type": "section",
