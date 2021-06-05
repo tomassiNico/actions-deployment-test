@@ -37,8 +37,36 @@ jobs:
         state: "failure"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
-    - name: Post to Slack
-      uses: opspresso/action-slack@master
+    - name: Slack Notification
+      uses: tokorom/action-slack-incoming-webhook@main
       env:
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-        JSON_PATH: ../../slack-templates/init-deployment.json
+        INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
+      with:
+        attachments: |
+          [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Nuevo deployment iniciado*\n <!channel> atentis\nEsperamos que salga todo bien"
+              },
+              "accessory": {
+                "type": "image",
+                "image_url": "https://tenor.com/view/lenny-simpsons-waiting-silent-still-gif-3838613",
+                "alt_text": "lenny waiting"
+              }
+            },
+            {
+              "type": "input",
+              "element": {
+                "type": "plain_text_input",
+                "multiline": true,
+                "action_id": "plain_text_input-action"
+              },
+              "label": {
+                "type": "plain_text",
+                "text": "Stories del deployment:",
+                "emoji": true
+              }
+            }
+          ]
