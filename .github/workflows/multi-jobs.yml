@@ -49,6 +49,6 @@ jobs:
           path: tmp/test-1.txt
 
       - run: ls -la tmp
-      - run: cat tmp/test-0.txt
-      - run: cat tmp/test-1.txt
+      - run: cat ./tmp/test-0.txt
+      - run: cat ./tmp/test-1.txt
 
