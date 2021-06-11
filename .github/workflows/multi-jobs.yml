@@ -25,12 +25,14 @@ jobs:
       run: |
         mkdir -p ./tmp
         echo "$CI_NODE_INDEX node" > touch ./tmp/test.$CI_NODE_INDEX.txt
+        ls -la tmp
+
     - uses: actions/upload-artifact@master
       env:
           CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       with:
         name: test-$CI_NODE_INDEX-$GITHUB_SHA.txt
-        path: ./tmp/test.$CI_NODE_INDEX.txt
+        path: ./tmp/
     
   test-coverage-upload:
     needs: test
