@@ -14,9 +14,6 @@ jobs:
         ci_node_index: [0, 1]
 
     steps:
-    - uses: actions@checkout@v2
-      name: Checkout main
-
     - name: First node
       if: ${{ matrix.ci_node_index }} = 0
       run: echo "Primer nodo"
