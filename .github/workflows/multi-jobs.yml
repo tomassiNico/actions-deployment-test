@@ -28,7 +28,7 @@ jobs:
         ls -la ./tmp
     - uses: actions/upload-artifact@master
       with:
-        name: test-${{ matrix.ci_node_index }}-${{ env.GITHUB_SHA }}.txt
+        name: test-${{ matrix.ci_node_index }}.txt
         path: ./tmp/test.*.txt
     
   test-coverage-upload:
@@ -40,12 +40,12 @@ jobs:
 
       - uses: actions/download-artifact@master
         with:
-          name: test-0-{{ env.GITHUB_SHA }}.txt
+          name: test-0.txt
           path: tmp/test-0.txt
 
       - uses: actions/download-artifact@master
         with:
-          name: test-1-{{ env.GITHUB_SHA }}.txt
+          name: test-1.txt
           path: tmp/test-1.txt
 
       - run: ls -la tmp
