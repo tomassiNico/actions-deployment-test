@@ -1,0 +1,57 @@
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        ci_node_total: [2]
+        ci_node_index: [0, 1]
+
+    steps:
+    - uses: actions@checkout@v2
+      name: Checkout main
+
+    - name: First node
+      if: ${{ matrix.ci_node_index }} = 0
+      run: echo "Primer nodo"
+
+    - name: Creating files
+      env:
+        CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+        CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+      run: |
+        mkdir -p ./tmp
+        echo "$CI_NODE_INDEX node" > touch ./tmp/test.$CI_NODE_INDEX.txt
+    - uses: actions/upload-artifact@master
+      env:
+          CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+      with:
+        name: test-$CI_NODE_INDEX-$GITHUB_SHA.txt
+        path: ./tmp/test.$CI_NODE_INDEX.txt
+    
+  test-coverage-upload:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: mkdir -p tmp
+
+      - uses: actions/download-artifact@master
+        with:
+          name: test-0-$GITHUB_SHA.txt
+          path: tmp/test-0.txt
+
+      - uses: actions/download-artifact@master
+        with:
+          name: test-1-$GITHUB_SHA.txt
+          path: tmp/test-1.txt
+
+      - run: ls -la tmp
+
+
