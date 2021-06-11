@@ -24,7 +24,7 @@ jobs:
         CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       run: |
         mkdir -p ./tmp
-        echo "$CI_NODE_INDEX node cambiado" > "./tmp/test.$CI_NODE_INDEX.txt"
+        echo "$CI_NODE_INDEX node SIN CHANGE" > "./tmp/test.$CI_NODE_INDEX.txt"
         ls -la ./tmp
     - uses: actions/upload-artifact@master
       with:
@@ -49,5 +49,6 @@ jobs:
           path: tmp/test-1.txt
 
       - run: ls -la tmp
-
+      - run: cat tmp/test-0.txt
+      - run: cat tmp/test-1.txt
 
