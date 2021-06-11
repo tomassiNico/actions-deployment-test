@@ -30,8 +30,8 @@ jobs:
       env:
           CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       with:
-        name: test-$CI_NODE_INDEX-$GITHUB_SHA.txt
-        path: "./tmp/test.$CI_NODE_INDEX.txt"
+        name: test-{{ env.CI_NODE_INDEX }}-{{ env.GITHUB_SHA }}.txt
+        path: ./tmp/test.{{ env.CI_NODE_INDEX }}.txt
     
   test-coverage-upload:
     needs: test
@@ -42,12 +42,12 @@ jobs:
 
       - uses: actions/download-artifact@master
         with:
-          name: test-0-$GITHUB_SHA.txt
+          name: test-0-{{ env.GITHUB_SHA }}.txt
           path: tmp/test-0.txt
 
       - uses: actions/download-artifact@master
         with:
-          name: test-1-$GITHUB_SHA.txt
+          name: test-1-{{ env.GITHUB_SHA }}.txt
           path: tmp/test-1.txt
 
       - run: ls -la tmp
