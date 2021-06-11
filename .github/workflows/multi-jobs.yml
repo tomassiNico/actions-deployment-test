@@ -27,11 +27,9 @@ jobs:
         echo "$CI_NODE_INDEX node" > "./tmp/test.$CI_NODE_INDEX.txt"
         ls -la ./tmp
     - uses: actions/upload-artifact@master
-      env:
-          CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       with:
-        name: test-{{ env.CI_NODE_INDEX }}-{{ env.GITHUB_SHA }}.txt
-        path: ./tmp/test.{{ env.CI_NODE_INDEX }}.txt
+        name: test-${{ matrix.ci_node_index }}-${{ env.GITHUB_SHA }}.txt
+        path: ./tmp/test.*.txt
     
   test-coverage-upload:
     needs: test
