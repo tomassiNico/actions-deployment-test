@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: First node
-      if: ${{ matrix.ci_node_index }} = 0
+      if: ${{ matrix.ci_node_index }} != '0'
       run: echo "Primer nodo"
 
     - name: Creating files
@@ -24,7 +24,7 @@ jobs:
         CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       run: |
         mkdir -p ./tmp
-        echo "$CI_NODE_INDEX node" > "./tmp/test.$CI_NODE_INDEX.txt"
+        echo "$CI_NODE_INDEX node cambiado" > "./tmp/test.$CI_NODE_INDEX.txt"
         ls -la ./tmp
     - uses: actions/upload-artifact@master
       with:
