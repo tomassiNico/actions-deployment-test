@@ -30,6 +30,7 @@ jobs:
       with:
         name: test-${{ matrix.ci_node_index }}.txt
         path: ./tmp/test.${{ matrix.ci_node_index }}.txt
+        retention-days: 2
     
   test-coverage-upload:
     needs: test
@@ -41,14 +42,14 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: test-0.txt
-          path: tmp/test-0.txt
+          path: tmp/test-0
 
       - uses: actions/download-artifact@master
         with:
           name: test-1.txt
-          path: tmp/test-1.txt
+          path: tmp/test-1
 
       - run: ls -la tmp
-      - run: cat ./tmp/test-0.txt
-      - run: cat ./tmp/test-1.txt
+      - run: ls -la ./tmp/test-0
+      - run: ls -la ./tmp/test-1
 
