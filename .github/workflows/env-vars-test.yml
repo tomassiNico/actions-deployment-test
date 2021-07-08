@@ -1,0 +1,20 @@
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      SOME_VAR: $(echo $GITHUB_SHA | head -c7)
+      SOME_VAR_2: echo $GITHUB_SHA | head -c7
+      SOME_VAR_3: $GITHUB_SHA
+
+    steps:
+    - name: First node
+      run: env
+      
+    - name: echo
+      run: echo "SOME_VAR $SOME_VAR  --- SOME_VAR_2 $SOME_VAR_2  --- SOME_VAR_3 $SOME_VAR_3"
+
+
