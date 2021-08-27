@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        env
-        echo PR #${{ github.event.number }} has been merged
+        var=${{ github.event.number }}
+        echo "var: $var"
+        echo "PR #${{ github.event.number }} has been merged"
 
   close_job:
     # this job will only run if the PR has been closed without being merged
@@ -22,4 +23,4 @@ jobs:
     steps:
     - run: |
         env
-        echo PR #${{ github.event.number }} has been closed without being merged
+        echo "PR #${{ github.event.number }} has been closed without being merged
