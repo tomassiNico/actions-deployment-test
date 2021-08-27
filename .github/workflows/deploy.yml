@@ -1,72 +1,12 @@
 on:
   push:
     branches:
-    - feature-random
+    - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: chrnorm/deployment-action@releases/v1
-      name: Create GitHub deployment
-      id: deployment
-      with:
-        token: "${{ github.token }}"
-        target_url: http://my-app-url.com
-        environment: production
-
     - name: deployment
-      run: echo "Deploy... (dummy)"
-
-    - name: Update deployment status (success)
-      if: success()
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: "${{ github.token }}"
-        target_url: http://my-app-url.com
-        state: "success"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-
-    - name: Update deployment status (failure)
-      if: failure()
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: "${{ github.token }}"
-        target_url: http://my-app-url.com
-        state: "failure"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-
-    - name: Slack Notification
-      uses: tokorom/action-slack-incoming-webhook@main
-      env:
-        INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
-      with:
-        blocks: |
-          [
-            {
-              "type": "section",
-              "text": {
-                "type": "mrkdwn",
-                "text": "*Nuevo deployment iniciado*\n <!channel> atentis\nEsperamos que salga todo bien"
-              },
-              "accessory": {
-                "type": "image",
-                "image_url": "https://tenor.com/view/lenny-simpsons-waiting-silent-still-gif-3838613",
-                "alt_text": "lenny waiting"
-              }
-            },
-            {
-              "type": "input",
-              "element": {
-                "type": "plain_text_input",
-                "multiline": true,
-                "action_id": "plain_text_input-action"
-              },
-              "label": {
-                "type": "plain_text",
-                "text": "Stories del deployment:",
-                "emoji": true
-              }
-            }
-          ]
+      run: env
