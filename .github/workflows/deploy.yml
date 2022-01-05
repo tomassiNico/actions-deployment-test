@@ -9,4 +9,29 @@ jobs:
 
     steps:
     - name: deployment
-      run: env
+      run: echo "deploy"
+
+    - name: failure
+      run: |
+      echo "Game over!"
+      exit 1
+
+  ending_success:
+      if: ${{ success() }}
+      needs: deploy
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Notify status failed on slack
+          run: |
+            echo "success job"
+
+  ending_failed:
+    if: ${{ failure() }}
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Notify status failed on slack
+        run: |
+          echo "failure job"
