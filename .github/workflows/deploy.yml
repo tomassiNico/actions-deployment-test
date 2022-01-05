@@ -13,8 +13,7 @@ jobs:
 
     - name: failure
       run: |
-        echo "Game over!"
-        exit 1
+        echo "Game pass!"
 
   ending_success:
       if: ${{ success() }}
